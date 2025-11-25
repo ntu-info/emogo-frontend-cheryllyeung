@@ -1,0 +1,90 @@
+[
+  {
+    "id": "1732458000000",
+    "emotion": {
+      "emoji": "😊",
+      "name": "Happy",
+      "color": "#FFD93D"
+    },
+    "intensity": 8,
+    "note": "Had a great breakfast and ready for the day!",
+    "timestamp": "2025-11-24T08:00:00.000Z"
+  },
+  {
+    "id": "1732472400000",
+    "emotion": {
+      "emoji": "🤔",
+      "name": "Thoughtful",
+      "color": "#F9A826"
+    },
+    "intensity": 6,
+    "note": "Working on homework, trying to figure out the deployment",
+    "timestamp": "2025-11-24T12:00:00.000Z"
+  },
+  {
+    "id": "1732486800000",
+    "emotion": {
+      "emoji": "😰",
+      "name": "Anxious",
+      "color": "#A8E6CF"
+    },
+    "intensity": 7,
+    "note": "Deadline is approaching, feeling a bit stressed",
+    "timestamp": "2025-11-24T16:00:00.000Z"
+  },
+  {
+    "id": "1732494000000",
+    "emotion": {
+      "emoji": "😌",
+      "name": "Calm",
+      "color": "#95E1D3"
+    },
+    "intensity": 7,
+    "note": "Took a break, feeling better now",
+    "timestamp": "2025-11-24T18:00:00.000Z"
+  },
+  {
+    "id": "1732504800000",
+    "emotion": {
+      "emoji": "😴",
+      "name": "Tired",
+      "color": "#B4A5E8"
+    },
+    "intensity": 8,
+    "note": "Long day of coding, time to rest",
+    "timestamp": "2025-11-24T21:00:00.000Z"
+  },
+  {
+    "id": "1732524000000",
+    "emotion": {
+      "emoji": "😊",
+      "name": "Happy",
+      "color": "#FFD93D"
+    },
+    "intensity": 9,
+    "note": "Morning coffee hits different!",
+    "timestamp": "2025-11-25T08:20:00.000Z"
+  },
+  {
+    "id": "1732539600000",
+    "emotion": {
+      "emoji": "😎",
+      "name": "Cool",
+      "color": "#4ECDC4"
+    },
+    "intensity": 9,
+    "note": "App is working great! Feeling proud of the progress",
+    "timestamp": "2025-11-25T12:40:00.000Z"
+  },
+  {
+    "id": "1732547200000",
+    "emotion": {
+      "emoji": "😊",
+      "name": "Happy",
+      "color": "#FFD93D"
+    },
+    "intensity": 8,
+    "note": "Almost done with the homework!",
+    "timestamp": "2025-11-25T14:53:20.000Z"
+  }
+]
