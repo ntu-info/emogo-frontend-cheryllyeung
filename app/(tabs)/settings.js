@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { useState, useEffect } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getAllEmotions, clearAllEmotions } from "../../utils/database";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
 
 export default function HistoryScreen() {
   const [emotions, setEmotions] = useState([]);
@@ -12,12 +14,9 @@ export default function HistoryScreen() {
 
   const loadEmotions = async () => {
     try {
-      const data = await AsyncStorage.getItem("emotions");
-      if (data) {
-        const parsedEmotions = JSON.parse(data);
-        setEmotions(parsedEmotions.reverse()); // Show newest first
-        calculateStats(parsedEmotions);
-      }
+      const data = await getAllEmotions();
+      setEmotions(data);
+      calculateStats(data);
     } catch (error) {
       console.error("Failed to load emotions:", error);
     }
@@ -34,26 +33,44 @@ export default function HistoryScreen() {
 
   const exportData = async () => {
     try {
-      const data = await AsyncStorage.getItem("emotions");
-      if (!data) {
+      const emotions = await getAllEmotions();
+
+      if (!emotions || emotions.length === 0) {
         Alert.alert("No Data", "No emotions recorded yet!");
         return;
       }
 
-      const emotions = JSON.parse(data);
-      const jsonString = JSON.stringify(emotions, null, 2);
+      const exportData = {
+        exportDate: new Date().toISOString(),
+        totalRecords: emotions.length,
+        emotions: emotions.map((emotion) => ({
+          id: emotion.id,
+          emotion: emotion.emotion.name,
+          emoji: emotion.emotion.emoji,
+          intensity: emotion.intensity,
+          note: emotion.note,
+          location: emotion.latitude && emotion.longitude
+            ? { latitude: emotion.latitude, longitude: emotion.longitude }
+            : null,
+          hasVideo: !!emotion.videoPath,
+          timestamp: emotion.timestamp,
+        })),
+      };
 
-      // For development, just show the data
-      Alert.alert(
-        "Export Data",
-        `Total records: ${emotions.length}\n\nData will be saved to data folder on build.`,
-        [
-          {
-            text: "OK",
-            onPress: () => console.log("Data:", jsonString),
-          },
-        ]
-      );
+      const jsonString = JSON.stringify(exportData, null, 2);
+      const fileUri = FileSystem.documentDirectory + "emogo_export.json";
+
+      await FileSystem.writeAsStringAsync(fileUri, jsonString);
+
+      const canShare = await Sharing.isAvailableAsync();
+      if (canShare) {
+        await Sharing.shareAsync(fileUri);
+      } else {
+        Alert.alert(
+          "Export Successful",
+          `Data exported to:\n${fileUri}\n\nTotal records: ${emotions.length}`
+        );
+      }
     } catch (error) {
       Alert.alert("Error", "Failed to export data");
       console.error(error);
@@ -70,7 +87,7 @@ export default function HistoryScreen() {
           text: "Delete",
           style: "destructive",
           onPress: async () => {
-            await AsyncStorage.removeItem("emotions");
+            await clearAllEmotions();
             setEmotions([]);
             setStats({});
             Alert.alert("Success", "All data cleared!");
@@ -160,6 +177,14 @@ export default function HistoryScreen() {
                 </View>
                 {record.note && (
                   <Text style={styles.cardNote}>{record.note}</Text>
+                )}
+                {record.latitude && record.longitude && (
+                  <Text style={styles.cardLocation}>
+                    📍 {record.latitude.toFixed(4)}, {record.longitude.toFixed(4)}
+                  </Text>
+                )}
+                {record.videoPath && (
+                  <Text style={styles.cardVideo}>🎥 Vlog recorded</Text>
                 )}
               </View>
             ))}
@@ -306,5 +331,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#495057",
     fontStyle: "italic",
+  },
+  cardLocation: {
+    marginTop: 8,
+    fontSize: 12,
+    color: "#495057",
+  },
+  cardVideo: {
+    marginTop: 8,
+    fontSize: 12,
+    color: "#495057",
+    fontWeight: "600",
   },
 });

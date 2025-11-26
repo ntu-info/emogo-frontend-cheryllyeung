@@ -2,12 +2,26 @@
   "expo": {
     "scheme": "acme",
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-sqlite",
+      "expo-camera",
+      "expo-location",
+      "expo-media-library"
     ],
-    "name": "expo-router-mwe",
+    "name": "EmoGo",
     "slug": "expo-router-mwe",
+    "version": "1.0.0",
     "android": {
-      "package": "com.spiketren.exporoutermwe"
+      "package": "com.spiketren.exporoutermwe",
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "READ_MEDIA_VIDEO",
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE"
+      ]
     },
     "extra": {
       "router": {},
@@ -18,7 +32,12 @@
     "ios": {
       "bundleIdentifier": "com.spiketren.exporoutermwe",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSCameraUsageDescription": "Allow EmoGo to access your camera to record vlogs.",
+        "NSMicrophoneUsageDescription": "Allow EmoGo to access your microphone to record vlogs.",
+        "NSLocationWhenInUseUsageDescription": "Allow EmoGo to use your location to track where you record your emotions.",
+        "NSPhotoLibraryUsageDescription": "Allow EmoGo to save your vlogs to your photo library.",
+        "NSPhotoLibraryAddUsageDescription": "Allow EmoGo to save your vlogs to your photo library."
       }
     },
     "owner": "cheryllyeung"

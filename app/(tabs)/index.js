@@ -1,6 +1,9 @@
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Alert } from "react-native";
-import { useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useState, useEffect } from "react";
+import { initDatabase, saveEmotion } from "../../utils/database";
+import { requestNotificationPermissions, scheduleNotifications } from "../../utils/notifications";
+import { getCurrentLocation } from "../../utils/location";
+import VlogRecorder from "../../components/VlogRecorder";
 
 const EMOTIONS = [
   { emoji: "😊", name: "Happy", color: "#FFD93D" },
@@ -17,35 +20,68 @@ export default function HomeScreen() {
   const [selectedEmotion, setSelectedEmotion] = useState(null);
   const [intensity, setIntensity] = useState(5);
   const [note, setNote] = useState("");
+  const [videoPath, setVideoPath] = useState(null);
+  const [location, setLocation] = useState(null);
 
-  const saveEmotion = async () => {
+  useEffect(() => {
+    initializeApp();
+  }, []);
+
+  const initializeApp = async () => {
+    try {
+      await initDatabase();
+      const granted = await requestNotificationPermissions();
+      if (granted) {
+        await scheduleNotifications();
+      }
+    } catch (error) {
+      console.error("Failed to initialize app:", error);
+    }
+  };
+
+  const handleSaveEmotion = async () => {
     if (!selectedEmotion) {
       Alert.alert("Error", "Please select an emotion!");
       return;
     }
 
-    const emotionRecord = {
-      id: Date.now().toString(),
-      emotion: selectedEmotion,
-      intensity: intensity,
-      note: note,
-      timestamp: new Date().toISOString(),
-    };
-
     try {
-      const existingData = await AsyncStorage.getItem("emotions");
-      const emotions = existingData ? JSON.parse(existingData) : [];
-      emotions.push(emotionRecord);
-      await AsyncStorage.setItem("emotions", JSON.stringify(emotions));
+      const currentLocation = await getCurrentLocation();
 
-      Alert.alert("Success", "Emotion recorded! 🎉");
+      const emotionRecord = {
+        emotion: selectedEmotion,
+        intensity: intensity,
+        note: note,
+        latitude: currentLocation?.latitude,
+        longitude: currentLocation?.longitude,
+        videoPath: videoPath,
+        timestamp: new Date().toISOString(),
+      };
+
+      await saveEmotion(emotionRecord);
+
+      let successMessage = "Emotion recorded!";
+      if (currentLocation) {
+        successMessage += `\nLocation: ${currentLocation.latitude.toFixed(4)}, ${currentLocation.longitude.toFixed(4)}`;
+      }
+      if (videoPath) {
+        successMessage += "\nVlog saved!";
+      }
+
+      Alert.alert("Success", successMessage);
       setSelectedEmotion(null);
       setIntensity(5);
       setNote("");
+      setVideoPath(null);
+      setLocation(null);
     } catch (error) {
       Alert.alert("Error", "Failed to save emotion");
       console.error(error);
     }
+  };
+
+  const handleVideoRecorded = (uri) => {
+    setVideoPath(uri);
   };
 
   return (
@@ -107,9 +143,21 @@ export default function HomeScreen() {
           </View>
         )}
 
+        {/* Vlog Recorder */}
+        {selectedEmotion && (
+          <VlogRecorder onVideoRecorded={handleVideoRecorded} />
+        )}
+
+        {/* Video Status */}
+        {videoPath && (
+          <View style={styles.videoStatus}>
+            <Text style={styles.videoStatusText}>✅ Vlog recorded</Text>
+          </View>
+        )}
+
         {/* Save Button */}
         {selectedEmotion && (
-          <TouchableOpacity style={styles.saveButton} onPress={saveEmotion}>
+          <TouchableOpacity style={styles.saveButton} onPress={handleSaveEmotion}>
             <Text style={styles.saveButtonText}>Save Emotion 💾</Text>
           </TouchableOpacity>
         )}
@@ -206,6 +254,18 @@ const styles = StyleSheet.create({
     borderColor: "#DEE2E6",
     minHeight: 80,
     textAlignVertical: "top",
+  },
+  videoStatus: {
+    backgroundColor: "#D4EDDA",
+    padding: 12,
+    borderRadius: 8,
+    marginVertical: 8,
+    alignItems: "center",
+  },
+  videoStatusText: {
+    fontSize: 14,
+    fontWeight: "600",
+    color: "#155724",
   },
   saveButton: {
     backgroundColor: "#4ECDC4",

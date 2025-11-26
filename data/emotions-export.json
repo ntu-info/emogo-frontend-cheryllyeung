@@ -1,90 +1,45 @@
-[
-  {
-    "id": "1732458000000",
-    "emotion": {
+{
+  "exportDate": "2025-11-26T03:19:02.141Z",
+  "totalRecords": 3,
+  "emotions": [
+    {
+      "id": "1763954342141",
+      "emotion": "Happy",
       "emoji": "😊",
-      "name": "Happy",
-      "color": "#FFD93D"
+      "intensity": 8,
+      "note": "Beautiful morning! Started the day with a great breakfast.",
+      "location": {
+        "latitude": 25.033,
+        "longitude": 121.5654
+      },
+      "hasVideo": true,
+      "timestamp": "2025-11-24T03:19:02.141Z"
     },
-    "intensity": 8,
-    "note": "Had a great breakfast and ready for the day!",
-    "timestamp": "2025-11-24T08:00:00.000Z"
-  },
-  {
-    "id": "1732472400000",
-    "emotion": {
-      "emoji": "🤔",
-      "name": "Thoughtful",
-      "color": "#F9A826"
-    },
-    "intensity": 6,
-    "note": "Working on homework, trying to figure out the deployment",
-    "timestamp": "2025-11-24T12:00:00.000Z"
-  },
-  {
-    "id": "1732486800000",
-    "emotion": {
-      "emoji": "😰",
-      "name": "Anxious",
-      "color": "#A8E6CF"
-    },
-    "intensity": 7,
-    "note": "Deadline is approaching, feeling a bit stressed",
-    "timestamp": "2025-11-24T16:00:00.000Z"
-  },
-  {
-    "id": "1732494000000",
-    "emotion": {
+    {
+      "id": "1764040742141",
+      "emotion": "Calm",
       "emoji": "😌",
-      "name": "Calm",
-      "color": "#95E1D3"
+      "intensity": 7,
+      "note": "Afternoon walk in the park, feeling relaxed.",
+      "location": {
+        "latitude": 25.0335,
+        "longitude": 121.566
+      },
+      "hasVideo": true,
+      "timestamp": "2025-11-25T03:19:02.141Z"
     },
-    "intensity": 7,
-    "note": "Took a break, feeling better now",
-    "timestamp": "2025-11-24T18:00:00.000Z"
-  },
-  {
-    "id": "1732504800000",
-    "emotion": {
-      "emoji": "😴",
-      "name": "Tired",
-      "color": "#B4A5E8"
-    },
-    "intensity": 8,
-    "note": "Long day of coding, time to rest",
-    "timestamp": "2025-11-24T21:00:00.000Z"
-  },
-  {
-    "id": "1732524000000",
-    "emotion": {
-      "emoji": "😊",
-      "name": "Happy",
-      "color": "#FFD93D"
-    },
-    "intensity": 9,
-    "note": "Morning coffee hits different!",
-    "timestamp": "2025-11-25T08:20:00.000Z"
-  },
-  {
-    "id": "1732539600000",
-    "emotion": {
-      "emoji": "😎",
-      "name": "Cool",
-      "color": "#4ECDC4"
-    },
-    "intensity": 9,
-    "note": "App is working great! Feeling proud of the progress",
-    "timestamp": "2025-11-25T12:40:00.000Z"
-  },
-  {
-    "id": "1732547200000",
-    "emotion": {
-      "emoji": "😊",
-      "name": "Happy",
-      "color": "#FFD93D"
-    },
-    "intensity": 8,
-    "note": "Almost done with the homework!",
-    "timestamp": "2025-11-25T14:53:20.000Z"
-  }
-]
+    {
+      "id": "1764127142141",
+      "emotion": "Thoughtful",
+      "emoji": "🤔",
+      "intensity": 6,
+      "note": "Working on the homework assignment, making good progress.",
+      "location": {
+        "latitude": 25.0328,
+        "longitude": 121.5658
+      },
+      "hasVideo": true,
+      "timestamp": "2025-11-26T03:19:02.141Z"
+    }
+  ]
+}

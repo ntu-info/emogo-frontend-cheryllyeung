@@ -1,0 +1,45 @@
+{
+  "exportDate": "2025-11-26T12:00:00.000Z",
+  "totalRecords": 3,
+  "emotions": [
+    {
+      "id": 1,
+      "emotion": "Happy",
+      "emoji": "😊",
+      "intensity": 8,
+      "note": "Beautiful morning! Had a great breakfast.",
+      "location": {
+        "latitude": 25.0330,
+        "longitude": 121.5654
+      },
+      "hasVideo": true,
+      "timestamp": "2025-11-24T10:15:00.000Z"
+    },
+    {
+      "id": 2,
+      "emotion": "Calm",
+      "emoji": "😌",
+      "intensity": 6,
+      "note": "Afternoon walk in the park",
+      "location": {
+        "latitude": 25.0335,
+        "longitude": 121.5660
+      },
+      "hasVideo": false,
+      "timestamp": "2025-11-25T15:30:00.000Z"
+    },
+    {
+      "id": 3,
+      "emotion": "Thoughtful",
+      "emoji": "🤔",
+      "intensity": 7,
+      "note": "Reflecting on the week",
+      "location": {
+        "latitude": 25.0328,
+        "longitude": 121.5658
+      },
+      "hasVideo": true,
+      "timestamp": "2025-11-26T20:45:00.000Z"
+    }
+  ]
+}
