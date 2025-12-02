@@ -52,7 +52,7 @@ export default function HistoryScreen() {
           location: emotion.latitude && emotion.longitude
             ? { latitude: emotion.latitude, longitude: emotion.longitude }
             : null,
-          hasVideo: !!emotion.videoPath,
+          videoPath: emotion.videoPath || null,
           timestamp: emotion.timestamp,
         })),
       };
