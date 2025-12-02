@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { initDatabase, saveEmotion } from "../../utils/database";
 import { requestNotificationPermissions, scheduleNotifications } from "../../utils/notifications";
 import { getCurrentLocation } from "../../utils/location";
+import { syncEmotionToBackend } from "../../utils/api";
 import VlogRecorder from "../../components/VlogRecorder";
 
 const EMOTIONS = [
@@ -60,7 +61,10 @@ export default function HomeScreen() {
 
       await saveEmotion(emotionRecord);
 
-      let successMessage = "Emotion recorded!";
+      // Sync to backend
+      await syncEmotionToBackend(emotionRecord);
+
+      let successMessage = "Emotion recorded and synced!";
       if (currentLocation) {
         successMessage += `\nLocation: ${currentLocation.latitude.toFixed(4)}, ${currentLocation.longitude.toFixed(4)}`;
       }
